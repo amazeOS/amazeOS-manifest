@@ -1,47 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-
   <remote name="aosp"
           fetch="https://android.googlesource.com"
           review="android-review.googlesource.com" />
 
   <remote name="github"
-          fetch="https://github.com" />
+          fetch="https://github.com/" />
+  
+  <remote name="lineage"
+          fetch="https://github.com/LineageOS"
+          review="review.lineageos.org" />
 
-  <remote name="amazeos"
-          fetch="https://github.com/amazeOS"
-          revision="refs/heads/main" />
-
-  <default revision="refs/tags/android-14.0.0_r1"
+  <default revision="refs/tags/android-14.0.0_r53"
            remote="aosp"
            sync-c="true"
            sync-j="4" />
 
   <superproject name="platform/superproject" />
 
-  <project path="build/make" name="platform/build" groups="pdk" />
-  <project path="build/soong" name="platform/build/soong" groups="pdk,tradefed" />
-  <project path="build/blueprint" name="platform/build/blueprint" groups="pdk,tradefed" />
-
-  <project path="frameworks/base" name="platform/frameworks/base" groups="pdk-cw-fs,pdk-fs" />
-  <project path="system/core" name="platform/system/core" groups="pdk" />
+  <project path="build/make" name="platform/build" groups="pdk" >
+    <copyfile src="core/root.mk" dest="Makefile" />
+    <linkfile src="CleanSpec.mk" dest="build/CleanSpec.mk" />
+    <linkfile src="buildspec.mk.default" dest="build/buildspec.mk.default" />
+    <linkfile src="core" dest="build/core" />
+    <linkfile src="envsetup.sh" dest="build/envsetup.sh" />
+    <linkfile src="target" dest="build/target" />
+    <linkfile src="tools" dest="build/tools" />
+  </project>
+  <project path="build/soong" name="platform/build/soong" groups="pdk,tradefed" >
+    <linkfile src="root.bp" dest="Android.bp" />
+    <linkfile src="bootstrap.bash" dest="bootstrap.bash" />
+  </project>
+  
   <project path="bionic" name="platform/bionic" groups="pdk" />
   <project path="bootable/recovery" name="platform/bootable/recovery" groups="pdk" />
+  <project path="frameworks/base" name="platform/frameworks/base" groups="pdk-cw-fs,pdk-fs" />
+  <project path="frameworks/native" name="platform/frameworks/native" groups="pdk" />
+  <project path="system/core" name="platform/system/core" groups="pdk" />
   <project path="system/sepolicy" name="platform/system/sepolicy" groups="pdk" />
 
   <project path="hardware/interfaces" name="platform/hardware/interfaces" groups="pdk" />
   <project path="hardware/libhardware" name="platform/hardware/libhardware" groups="pdk" />
 
-  <project path="system/vold" name="platform/system/vold" groups="pdk" />
-  <project path="system/bt" name="platform/system/bt" groups="pdk" revision="master" />
-  <project path="system/netd" name="platform/system/netd" groups="pdk" />
+  <project path="device/generic/goldfish" name="device/generic/goldfish" groups="pdk" />
 
   <project path="external/selinux" name="platform/external/selinux" groups="pdk" />
-  <project path="external/sqlite" name="platform/external/sqlite" groups="pdk" />
-  <project path="external/zlib" name="platform/external/zlib" groups="pdk" />
+  <project path="external/tinycompress" name="platform/external/tinycompress" groups="pdk" />
 
-  <project path="device/generic/goldfish" name="device/generic/goldfish" groups="pdk" />
+  <project path="system/vold" name="platform/system/vold" groups="pdk" />
+  <project path="system/bt" name="platform/system/bt" groups="pdk" />
+  <project path="system/netd" name="platform/system/netd" groups="pdk" />
+
+  <project path="packages/apps/Settings" name="platform/packages/apps/Settings" groups="pdk-fs" />
+  <project path="packages/apps/Launcher3" name="platform/packages/apps/Launcher3" groups="pdk-fs" />
+
+  <project path="prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9" name="platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9" groups="pdk,linux,arm" clone-depth="1" />
+  <project path="prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9" name="platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9" groups="pdk,linux,arm" clone-depth="1" />
+  <project path="prebuilts/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" groups="pdk" clone-depth="1" />
 
   <project path="prebuilts/qemu-kernel" name="platform/prebuilts/qemu-kernel" clone-depth="1" groups="pdk" />
 
+  <project path="hardware/lineage/interfaces" name="android_hardware_lineage_interfaces" remote="lineage" revision="lineage-21.0" />
+  <project path="vendor/lineage" name="android_vendor_lineage" remote="lineage" revision="lineage-21.0" />
+  <project path="device/lineage/sepolicy" name="android_device_lineage_sepolicy" remote="lineage" revision="lineage-21.0" />
 </manifest>
