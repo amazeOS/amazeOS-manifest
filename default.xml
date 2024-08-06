@@ -44,8 +44,4 @@
 
   <project path="prebuilts/qemu-kernel" name="platform/prebuilts/qemu-kernel" clone-depth="1" groups="pdk" />
 
-  <project path="vendor/gapps" name="opengapps/aosp_build" revision="master" remote="github" />
-
-  <project path="vendor/amazeos" name="amazeOS-vendor" remote="amazeos" />
-
 </manifest>
